@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="video" class="video"></div>
+    <script>
+        (async () => {
+            const videoCreated = (stream) => {
+                const videoMain = document.getElementById("video")
+                const video = document.createElement("video")
+                video.srcObject = stream
+                video.addEventListener("loadedmetadata", () => { video.play() })
+                videoMain.appendChild(video)
+            }
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+                videoCreated(stream)
+            } catch (error) {
+                console.error('Error getting media stream:', error);
+            }
+        })();
+    </script>
+</body>
+</html>
